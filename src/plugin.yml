@@ -1,0 +1,5 @@
+name: TranslateAPI
+version: 0.1
+main: ch.skylouna.api.TranslateAPI
+author: SkyLouna
+description: Translating
