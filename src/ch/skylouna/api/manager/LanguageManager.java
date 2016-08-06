@@ -76,4 +76,9 @@ public class LanguageManager {
 		this.defaultLanguage = defaultLanguage;
 	}
 
+	public void reloadLanguages() {
+		for (Language lang : getLanguages().values())
+			lang.reloadFile();
+	}
+
 }

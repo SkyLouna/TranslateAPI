@@ -63,6 +63,10 @@ public class Language {
 			return msg;
 	}
 
+	public void reloadFile() {
+		configFile = YamlConfiguration.loadConfiguration(file);
+	}
+
 	/**
 	 * Defaults getters and setters
 	 */

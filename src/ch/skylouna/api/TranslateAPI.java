@@ -58,7 +58,6 @@ public class TranslateAPI extends JavaPlugin {
 		p.sendMessage(translate(p, key, args));
 	}
 
-
 	/**
 	 * Translate a message il player language
 	 * 
@@ -70,8 +69,8 @@ public class TranslateAPI extends JavaPlugin {
 	public static String translate(Player p, String key, String... args) {
 		String defaultMessage = getLanguage(p).getMessage(key);
 		for (int i = 0; i < args.length; i++)
-			defaultMessage.replace("@" + i, args[i]);
-		defaultMessage.replace("&", "§");
+			defaultMessage = defaultMessage.replace("@" + i, args[i]);
+		defaultMessage = defaultMessage.replace("&", "§");
 		return defaultMessage;
 	}
 
