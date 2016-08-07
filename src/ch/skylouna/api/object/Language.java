@@ -26,6 +26,7 @@ package ch.skylouna.api.object;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import ch.skylouna.api.TranslateAPI;
@@ -36,6 +37,7 @@ public class Language {
 	String fileName;
 	File file;
 	FileConfiguration configFile;
+	HashMap<String, String> languageTranslations;
 
 
 	public Language(String name, String filename) {
@@ -52,19 +54,38 @@ public class Language {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		TranslateAPI.warn("§aNew language ! " + name + " " + fileName);
+		languageTranslations = new HashMap<>();
+		loadLanguages();
+		TranslateAPI.warn("§aNew language ! " + name + " " + fileName + " (" + languageTranslations.size() + " translations)");
 	}
 
 	public String getMessage(String key) {
-		String msg = configFile.getString(key);
+		String msg = languageTranslations.get(key);
 		if (msg == null) {
 			return "Unknown Key for language: " + this.getName() + " (" + key + ")";
 		} else
 			return msg;
 	}
 
-	public void reloadFile() {
+	public void loadLanguages() {
+		int lastSize = languageTranslations.size();
+		long lastTime = System.currentTimeMillis();
+		languageTranslations.clear();
 		configFile = YamlConfiguration.loadConfiguration(file);
+		for (String str : configFile.getKeys(true)) {
+			if (languageTranslations.containsKey(str)) {
+				// normaly key can't be 2 times the same :o Bukkit block that
+				TranslateAPI.warn("§cThere are two times the same keys in " + this.name + " : " + str + " §c( " + languageTranslations.get(str) + " §c) is now ( " + configFile.getString(str) + " §c)");
+			}
+			languageTranslations.put(str, configFile.getString(str));
+		}
+		TranslateAPI.warn("Loading " + this.name + " in: " + (System.currentTimeMillis() - lastTime) + " millis. Actual: " + languageTranslations.size() + " Keys. Before: " + lastSize + " Keys.");
+
+	}
+
+	public void reloadFile() {
+		TranslateAPI.warn("Reloading " + this.name);
+		loadLanguages();
 	}
 
 	/**
