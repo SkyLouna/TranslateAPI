@@ -24,7 +24,11 @@
 
 package ch.skylouna.api.manager;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import ch.skylouna.api.TranslateAPI;
 import ch.skylouna.api.object.Language;
 
 public class LanguageManager {
@@ -34,6 +38,29 @@ public class LanguageManager {
 	public LanguageManager() {
 		languages = new HashMap<>();
 		defaultLanguage = null;
+	}
+
+	/**
+	 * Load all languages from a folder excepting some files
+	 * 
+	 * @param folder
+	 * @param ignoredFiles
+	 */
+
+	public void loadFromFolder(File folder, String... ignoredFiles) {
+		List<String> ignored = Arrays.asList(ignoredFiles);
+		if (folder.exists()) {
+			for (File f : folder.listFiles()) {
+				if (ignored.contains(f.getName())) {
+					TranslateAPI.warn("Skipping " + f.getName());
+				} else {
+					TranslateAPI.warn("Adding " + f.getName());
+					addLanguage(new Language(f.getName().replace(".yml", ""), f));
+				}
+			}
+		} else {
+			TranslateAPI.warn("§4Folder " + folder.getName() + " don't exist (Rt if you cry everyday)");
+		}
 	}
 
 	public void addLanguage(Language language) {
@@ -46,7 +73,7 @@ public class LanguageManager {
 			if (hasDefaultLanguage())
 				return defaultLanguage;
 			else
-				return new Language("Default", "default.yml");
+				return new Language("Default", new File("Default.yml"));
 		else
 			return language;
 	}

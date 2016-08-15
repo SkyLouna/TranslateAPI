@@ -40,10 +40,10 @@ public class Language {
 	HashMap<String, String> languageTranslations;
 
 
-	public Language(String name, String filename) {
+	public Language(String name, File file) {
 		this.name = name;
-		this.fileName = filename;
-		file = new File(TranslateAPI.instance.getDataFolder() + "/" + filename);
+		this.fileName = file.getName();
+		this.file = file;
 		try {
 			if (file.createNewFile()) {
 				TranslateAPI.warn("§cCreate file for language " + name + " §a(" + fileName + ")");
@@ -55,7 +55,7 @@ public class Language {
 			e.printStackTrace();
 		}
 		languageTranslations = new HashMap<>();
-		loadLanguages();
+		loadTranslations();
 		TranslateAPI.warn("§aNew language ! " + name + " " + fileName + " (" + languageTranslations.size() + " translations)");
 	}
 
@@ -67,11 +67,12 @@ public class Language {
 			return msg;
 	}
 
-	public void loadLanguages() {
+	public void loadTranslations() {
 		int lastSize = languageTranslations.size();
 		long lastTime = System.currentTimeMillis();
 		languageTranslations.clear();
 		configFile = YamlConfiguration.loadConfiguration(file);
+		configFile.options().copyDefaults(true);
 		for (String str : configFile.getKeys(true)) {
 			if (languageTranslations.containsKey(str)) {
 				// normaly key can't be 2 times the same :o Bukkit block that
@@ -85,7 +86,7 @@ public class Language {
 
 	public void reloadFile() {
 		TranslateAPI.warn("Reloading " + this.name);
-		loadLanguages();
+		loadTranslations();
 	}
 
 	/**

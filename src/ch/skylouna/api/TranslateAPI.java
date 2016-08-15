@@ -24,10 +24,13 @@
 package ch.skylouna.api;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import ch.skylouna.api.manager.LanguageManager;
 import ch.skylouna.api.object.Language;
+import net.minecraft.server.v1_8_R2.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_8_R2.PacketPlayOutChat;
 
 public class TranslateAPI extends JavaPlugin {
 
@@ -58,6 +61,11 @@ public class TranslateAPI extends JavaPlugin {
 		p.sendMessage(translate(p, key, args));
 	}
 
+	public static void sendActionBar(Player p, String key, String... args) {
+		PacketPlayOutChat ppoc = new PacketPlayOutChat(ChatSerializer.a("{\"text\":\"" + translate(p, key, args) + "\"}"), (byte) 2);
+		((CraftPlayer) p).getHandle().playerConnection.sendPacket(ppoc);
+	}
+
 	/**
 	 * Translate a message il player language
 	 * 
@@ -67,6 +75,8 @@ public class TranslateAPI extends JavaPlugin {
 	 * @return translated message
 	 */
 	public static String translate(Player p, String key, String... args) {
+		if (key == null)
+			return null;
 		String defaultMessage = getLanguage(p).getMessage(key);
 		for (int i = 0; i < args.length; i++)
 			defaultMessage = defaultMessage.replace("@" + i, args[i]);
