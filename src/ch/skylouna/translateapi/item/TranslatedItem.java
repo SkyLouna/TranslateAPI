@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package ch.skylouna.api.item;
+package ch.skylouna.translateapi.item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import ch.skylouna.api.TranslateAPI;
+import ch.skylouna.translateapi.TranslateAPI;
 
 public class TranslatedItem {
 

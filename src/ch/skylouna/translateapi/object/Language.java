@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-package ch.skylouna.api.object;
+package ch.skylouna.translateapi.object;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import ch.skylouna.api.TranslateAPI;
+import ch.skylouna.translateapi.TranslateAPI;
 
 public class Language {
 
@@ -59,8 +59,12 @@ public class Language {
 		TranslateAPI.warn("§aNew language ! " + name + " " + fileName + " (" + languageTranslations.size() + " translations)");
 	}
 
-	public String getMessage(String key) {
-		String msg = languageTranslations.get(key);
+	public String getMessage(String key, boolean dynamic) {
+		String msg = null;
+		if (dynamic)
+			getConfigFile().getString(key);
+		else
+			msg = languageTranslations.get(key);
 		if (msg == null) {
 			return "Unknown Key for language: " + this.getName() + " (" + key + ")";
 		} else

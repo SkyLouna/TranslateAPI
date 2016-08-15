@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-package ch.skylouna.api.manager;
+package ch.skylouna.translateapi.manager;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import ch.skylouna.api.TranslateAPI;
-import ch.skylouna.api.object.Language;
+import ch.skylouna.translateapi.TranslateAPI;
+import ch.skylouna.translateapi.object.Language;
 
 public class LanguageManager {
 	HashMap<String, Language> languages;

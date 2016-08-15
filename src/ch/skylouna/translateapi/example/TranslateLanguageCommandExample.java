@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-package ch.skylouna.api.example;
+package ch.skylouna.translateapi.example;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import ch.skylouna.api.TranslateAPI;
-import ch.skylouna.api.object.Language;
+import ch.skylouna.translateapi.TranslateAPI;
+import ch.skylouna.translateapi.object.Language;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;

@@ -22,12 +22,12 @@
  * THE SOFTWARE.
  */
 
-package ch.skylouna.api.example;
+package ch.skylouna.translateapi.example;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import ch.skylouna.api.TranslateAPI;
+import ch.skylouna.translateapi.TranslateAPI;
 
 public class TranslateEventExample implements Listener {
 
